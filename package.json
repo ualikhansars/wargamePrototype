@@ -1,0 +1,11 @@
+{
+  "name": "wargame",
+  "version": "1.0.0",
+  "description": "Wargame Web game",
+  "main": "game.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ualikhan Sarsenbayev",
+  "license": "MIT"
+}
