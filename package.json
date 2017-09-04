@@ -7,5 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ualikhan Sarsenbayev",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^2.3.4",
+    "typescript": "^2.5.2",
+    "webpack": "^3.5.5"
+  }
 }
