@@ -1,0 +1,3 @@
+class Warrior {
+  name: string;
+}

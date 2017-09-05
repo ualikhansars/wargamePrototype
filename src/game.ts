@@ -1,15 +1,34 @@
-// global variables
-export const WIDTH: number = 1224;
-export const HEIGHT: number = 768;
+import {canvas, ctx} from './map/mapConfig';
+import {drawGrid} from './map/drawGrid';
+import {createMap} from './map/createMap';
 
-// create Canvas
-export let canvas = document.createElement('canvas');
-canvas.id = "canvas";
-canvas.width = WIDTH;
-canvas.height = HEIGHT;
-canvas.style.border = "1px solid";
+let gridSize = 20;
 
-document.body.appendChild(canvas);
+drawGrid(gridSize);
+let map = createMap(gridSize);
+console.log(map);
 
-// define 2d context
-export let ctx = canvas.getContext("2d");
+canvas.addEventListener('click', (e) => {
+  console.error('Click');
+  let x = e.offsetX; // get X
+  let y = e.offsetY; // get Y
+  console.log('Position x', e.offsetX); // get X
+  console.log('Position y', e.offsetY); // get Y
+  for(let grid of map) {
+    let bottomRightX = grid.topLeftX + gridSize;
+    let bottomRightY = grid.topLeftY + gridSize;
+    if(x >= grid.topLeftX && x < bottomRightX && y >= grid.topLeftY && y < bottomRightY) {
+      ctx.fillStyle = 'green';
+      ctx.fillRect(grid.topLeftX, grid.topLeftY, 20 , 20);
+      console.log('grid', grid, 'was clicked');
+    }
+  }
+});
+
+// set onClickListener for right mouse event
+canvas.addEventListener('contextmenu', (e) => {
+  console.error('Right Mouse Click');
+  e.preventDefault();
+  let x = e.offsetX; // get X
+  let y = e.offsetY; // get Y
+});
