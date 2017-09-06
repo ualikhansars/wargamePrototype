@@ -1,11 +1,14 @@
 import {canvas, ctx} from './map/mapConfig';
 import {drawGrid} from './map/drawGrid';
-import {createMap} from './map/createMap';
+import {addNeighbours, createNodes} from './map/createMap';
+import {showObstacles} from './map/mapUtils';
 
 let gridSize = 20;
 
 drawGrid(gridSize);
-let map = createMap(gridSize);
+let map = createNodes(gridSize);
+addNeighbours(map, gridSize);
+showObstacles(map, gridSize);
 console.log(map);
 
 canvas.addEventListener('click', (e) => {
@@ -15,11 +18,11 @@ canvas.addEventListener('click', (e) => {
   console.log('Position x', e.offsetX); // get X
   console.log('Position y', e.offsetY); // get Y
   for(let grid of map) {
-    let bottomRightX = grid.topLeftX + gridSize;
-    let bottomRightY = grid.topLeftY + gridSize;
-    if(x >= grid.topLeftX && x < bottomRightX && y >= grid.topLeftY && y < bottomRightY) {
+    let bottomRightX = grid.x + gridSize;
+    let bottomRightY = grid.y + gridSize;
+    if(x >= grid.x && x < bottomRightX && y >= grid.y && y < bottomRightY) {
       ctx.fillStyle = 'green';
-      ctx.fillRect(grid.topLeftX, grid.topLeftY, 20 , 20);
+      ctx.fillRect(grid.x, grid.y, gridSize , gridSize);
       console.log('grid', grid, 'was clicked');
     }
   }
@@ -31,4 +34,14 @@ canvas.addEventListener('contextmenu', (e) => {
   e.preventDefault();
   let x = e.offsetX; // get X
   let y = e.offsetY; // get Y
+
+  for(let grid of map) {
+    let bottomRightX = grid.x + gridSize;
+    let bottomRightY = grid.y + gridSize;
+    if(x >= grid.x && x < bottomRightX && y >= grid.y && y < bottomRightY) {
+      ctx.fillStyle = 'red';
+      ctx.fillRect(grid.x, grid.y, gridSize, gridSize);
+      console.log('grid', grid, 'was clicked');
+    }
+  }
 });
