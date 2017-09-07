@@ -33,13 +33,13 @@ export const addNeighbours = (map:any[], gridSize:number) => {
 
 export const neighbours = (node:any, map:any[], gridSize:number) => {
   let dirs = [
-    {x: -gridSize, y: gridSize},
+    {x: -gridSize, y: -gridSize},
+    {x: 0, y: -gridSize},
     {x: gridSize, y: -gridSize},
-    {x: gridSize, y: -gridSize},
+    {x: -gridSize, y: 0},
+    {x: gridSize, y: 0},
     {x: -gridSize, y: gridSize},
-    {x: gridSize, y: gridSize},
-    {x: -gridSize, y: gridSize},
-    {x: gridSize, y: gridSize},
+    {x: 0, y: gridSize},
     {x: gridSize, y: gridSize}
   ];
   let result = [];
@@ -48,15 +48,11 @@ export const neighbours = (node:any, map:any[], gridSize:number) => {
       x: node.x + dir.x,
       y: node.y + dir.y
     }
-    for(let el of map) {
-      if(el.x === neighbor.x && el.y === neighbor.y) {
-        result.push({
-          id: el.id,
-          x: el.x,
-          y: el.y,
-          value: el.value
-        });
-      }
+    if(neighbor.x >= 0 && neighbor.x < 1000 && neighbor.y >= 0 && neighbor.y < 600) {
+      result.push({
+        x: neighbor.x,
+        y: neighbor.y,
+      });
     }
   }
   return result;
