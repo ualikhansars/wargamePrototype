@@ -2,6 +2,7 @@ import {canvas, ctx} from './map/mapConfig';
 import {drawGrid} from './map/drawGrid';
 import {addNeighbours, createNodes} from './map/createMap';
 import {showObstacles} from './map/mapUtils';
+import {h} from './path/AStar';
 
 let gridSize = 20;
 
@@ -10,6 +11,9 @@ let map = createNodes(gridSize);
 addNeighbours(map, gridSize);
 showObstacles(map, gridSize);
 console.log(map);
+
+let startNode:any;
+let finishNode:any;
 
 canvas.addEventListener('click', (e) => {
   console.error('Click');
@@ -23,6 +27,7 @@ canvas.addEventListener('click', (e) => {
     if(x >= grid.x && x < bottomRightX && y >= grid.y && y < bottomRightY) {
       ctx.fillStyle = 'green';
       ctx.fillRect(grid.x, grid.y, gridSize , gridSize);
+      startNode = grid;
       console.log('grid', grid, 'was clicked');
     }
   }
@@ -42,6 +47,8 @@ canvas.addEventListener('contextmenu', (e) => {
       ctx.fillStyle = 'red';
       ctx.fillRect(grid.x, grid.y, gridSize, gridSize);
       console.log('grid', grid, 'was clicked');
+      finishNode = grid;
+      console.log('h', h(startNode, finishNode));
     }
   }
 });
