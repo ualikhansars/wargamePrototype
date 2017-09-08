@@ -20,6 +20,10 @@ export const AStar = (startNode:any, finishNode:any) => {
   gScore[startNode] = 0;
   fScore[startNode] = gScore[startNode] + h(startNode, finishNode);
 
+  while(open) {
+    let current = getMinFScore(open);
+  }
+
 
 }
 
@@ -33,4 +37,14 @@ export const h = (startNode:any, finishNode:any) => {
   let dx = Math.abs(startNode.x - finishNode.x);
   let dy = Math.abs(startNode.y - finishNode.y);
   return D * (dx + dy) + (D2 - 2 * D) * Math.min(dx, dy);
+}
+
+export const getMinFScore = (open: any[]) => {
+  let min = 0;
+  for(let i = 1; i < open.length - 1; ++i) {
+    if(open[min] > open[i]) {
+      min = i;
+    }
+  }
+  return open[min];
 }
