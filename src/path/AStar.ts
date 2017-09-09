@@ -21,7 +21,9 @@ export const AStar = (startNode:any, finishNode:any) => {
   //fScore.push({node: startNode, value: gScore.value + h(startNode, finishNode)})
 
   while(open) {
-    let current = getMinFScore(open);
+    let current:any = getMinFScore(open);
+    if(current.x === finishNode.x && current.y === finishNode.y) return;
+    
   }
 
 
