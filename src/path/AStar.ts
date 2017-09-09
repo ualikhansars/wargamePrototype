@@ -13,12 +13,12 @@ export const AStar = (startNode:any, finishNode:any) => {
   let from = new Map();
 
   // For each node, the cost of getting from the start node to that node.
-  let gScore = [];
-  let fScore = [];
+  let gScore = new Map();
+  let fScore = new Map();
 
-  gScore.push(startNode);
-  gScore[startNode] = 0;
-  fScore[startNode] = gScore[startNode] + h(startNode, finishNode);
+  gScore.set(startNode, 0);
+  fScore.set(startNode, gScore.get(startNode) + h(startNode, finishNode));
+  //fScore.push({node: startNode, value: gScore.value + h(startNode, finishNode)})
 
   while(open) {
     let current = getMinFScore(open);
@@ -39,10 +39,11 @@ export const h = (startNode:any, finishNode:any) => {
   return D * (dx + dy) + (D2 - 2 * D) * Math.min(dx, dy);
 }
 
-export const getMinFScore = (open: any[]) => {
+export const getMinFScore = (map:any) => {
+  let open:any[] = Array.from(map);
   let min = 0;
   for(let i = 1; i < open.length - 1; ++i) {
-    if(open[min] > open[i]) {
+    if(open[min][1] > open[i][1]) {
       min = i;
     }
   }
