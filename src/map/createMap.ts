@@ -2,10 +2,11 @@ import {
   canvas,
   ctx,
   WIDTH,
-  HEIGHT
+  HEIGHT,
+  gridSize
 } from '../map/mapConfig';
 
-export const createNodes = (gridSize:number) => {
+export const createNodes = () => {
   let map:any[] = [];
   let value = 1;
   let id = 0;
@@ -24,36 +25,46 @@ export const createNodes = (gridSize:number) => {
   return map;
 }
 
-export const addNeighbours = (map:any[], gridSize:number) => {
-  for(let node of map) {
-    let n = neighbours(node, map, gridSize);
-    node.neighbours = n;
-  }
-}
-
-export const neighbours = (node:any, map:any[], gridSize:number) => {
+export const neighbours = (node:any) => {
   let dirs = [
-    {x: -gridSize, y: -gridSize},
-    {x: 0, y: -gridSize},
-    {x: gridSize, y: -gridSize},
-    {x: -gridSize, y: 0},
-    {x: gridSize, y: 0},
-    {x: -gridSize, y: gridSize},
-    {x: 0, y: gridSize},
-    {x: gridSize, y: gridSize}
+    {x: -gridSize, y: -gridSize, distance: 14},
+    {x: 0, y: -gridSize, distance: 10},
+    {x: gridSize, y: -gridSize, distance: 14},
+    {x: -gridSize, y: 0, distance: 10},
+    {x: gridSize, y: 0, distance: 10},
+    {x: -gridSize, y: gridSize, distance: 14},
+    {x: 0, y: gridSize, distance: 10},
+    {x: gridSize, y: gridSize, distance: 14}
   ];
   let result = [];
   for(let dir of dirs) {
     let neighbor = {
       x: node.x + dir.x,
-      y: node.y + dir.y
+      y: node.y + dir.y,
+      distance: dir.distance
     }
     if(neighbor.x >= 0 && neighbor.x < 1000 && neighbor.y >= 0 && neighbor.y < 600) {
-      result.push({
-        x: neighbor.x,
-        y: neighbor.y,
-      });
+      for(let node of map) {
+        if(neighbor.x === node.x && neighbor.y ) {
+          result.push(node);
+        }
+      }
+      // result.push({
+      //   x: neighbor.x,
+      //   y: neighbor.y,
+      //   distance: neighbor.distance,
+      // });
     }
   }
   return result;
 }
+
+export const addNeighbours = (map:any[]) => {
+  for(let node of map) {
+    let n = neighbours(node);
+    node.neighbours = n;
+  }
+}
+
+export const map = createNodes();
+addNeighbours(map);

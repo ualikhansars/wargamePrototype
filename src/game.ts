@@ -1,15 +1,16 @@
 import {canvas, ctx} from './map/mapConfig';
 import {drawGrid} from './map/drawGrid';
-import {addNeighbours, createNodes} from './map/createMap';
+import {
+  addNeighbours,
+  createNodes,
+  map
+} from './map/createMap';
 import {showObstacles} from './map/mapUtils';
-import {h} from './path/AStar';
+import {h, aStar} from './path/AStar';
 
-let gridSize = 20;
+let gridSize = 100;
 
-drawGrid(gridSize);
-let map = createNodes(gridSize);
-addNeighbours(map, gridSize);
-showObstacles(map, gridSize);
+drawGrid();
 console.log(map);
 
 let startNode:any;
@@ -49,6 +50,7 @@ canvas.addEventListener('contextmenu', (e) => {
       console.log('grid', grid, 'was clicked');
       finishNode = grid;
       console.log('h', h(startNode, finishNode));
+      aStar(startNode, finishNode);
     }
   }
 });
