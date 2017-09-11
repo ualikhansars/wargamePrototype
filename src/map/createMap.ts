@@ -44,16 +44,11 @@ export const neighbours = (node:any) => {
       distance: dir.distance
     }
     if(neighbor.x >= 0 && neighbor.x < 1000 && neighbor.y >= 0 && neighbor.y < 600) {
-      for(let node of map) {
-        if(neighbor.x === node.x && neighbor.y ) {
-          result.push(node);
-        }
-      }
-      // result.push({
-      //   x: neighbor.x,
-      //   y: neighbor.y,
-      //   distance: neighbor.distance,
-      // });
+      result.push({
+        x: neighbor.x,
+        y: neighbor.y,
+        distance: neighbor.distance,
+      });
     }
   }
   return result;

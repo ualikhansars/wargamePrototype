@@ -4,10 +4,12 @@ import {
   getMinFScore,
   deleteObjectFromArray,
   isObjectInArray,
-  unclosedNeigbours
+  unclosedNeigbours,
+  isObjectInMapKeys
 } from '../src/path/AStar';
 
 let open:any = [];
+
 let node1 = {x: 12, y: 30, fScore: 3000};
 let node2 = {x: 11, y: 31, fScore: 4000};
 let node3 = {x: 22, y: 300, fScore: 2700};
@@ -30,12 +32,31 @@ open.push(node5);
 open.push(node6);
 open.push(node7);
 
+let from:any = new Map();
+from.set(node1, node5);
+from.set(node2, node3);
+from.set(node6, node4);
+from.set(node5, node2);
+
 describe('A* Algorithm tests', function() {
   describe('getMinFScore', function() {
     it('min value should be 1200, return node is {node: {x: 12, y: 30, fScore: 1200}', function() {
       assert.equal(getMinFScore(open).fScore, 1200);
     });
   });
+
+  describe('isObjectInMapKeys', function() {
+    it('return for node2 shoule be true ', function() {
+      assert.equal(isObjectInMapKeys(node2, from), true);
+    });
+    it('return for node3 should be false ', function() {
+      assert.equal(isObjectInArray(node3, from), false);
+    });
+    it('return for node4 should be false ', function() {
+      assert.equal(isObjectInArray(node4, from), false);
+    });
+  });
+
   describe('IsObjectInArray', function() {
     it('find node {x: 11, y: 31, fScore: 4000}', function() {
       assert.equal(isObjectInArray(node2, open), true);
@@ -47,12 +68,14 @@ describe('A* Algorithm tests', function() {
       assert.equal(isObjectInArray({x: 134, y: 94, fScore: 6589}, open), false);
     });
   });
+
   describe('Delete node from map', function() {
     it('Delete node {x: 27, y: 52, fScore: 2800}', function() {
       let updatedOpen = deleteObjectFromArray(node6, open);
       assert.equal(isObjectInArray(node6, updatedOpen), false);
     });
   });
+
   describe('unclosedNeigbours', function() {
     it('Check neighbours of node7 is in closed', function() {
       let neighboursNotInClosed = unclosedNeigbours(node7, closed);
@@ -62,4 +85,5 @@ describe('A* Algorithm tests', function() {
       assert.equal(isObjectInArray(node4, neighboursNotInClosed), false);
     });
   });
+
 });

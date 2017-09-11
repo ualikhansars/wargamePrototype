@@ -1,3 +1,5 @@
+import {neighbours, map} from '../map/createMap';
+
 export const aStar = (startNode:any, finishNode:any) => {
   // the set of currently discovered nodes that are not evaluated yet
   // Initially only the start node is known
@@ -24,6 +26,7 @@ export const aStar = (startNode:any, finishNode:any) => {
     let current:any = getMinFScore(open);
     console.log('current', current);
     if(current.x === finishNode.x && current.y === finishNode.y) {
+      console.error('Path', reconstructPath(from, current));
       return reconstructPath(from, current);
     }
     open = deleteObjectFromArray(current, open);
@@ -36,6 +39,8 @@ export const aStar = (startNode:any, finishNode:any) => {
         neighbour.fScore = neighbour.gScore + h(neighbour, finishNode);
       }
       if(!isObjectInArray(neighbour, open)) { // create function
+        let nodeNeighbours = neighbours(neighbour);
+        neighbour.neighbours = nodeNeighbours;
         open.push(neighbour);
       }
     }
@@ -80,6 +85,19 @@ export const getMinFScore = (open:any[]) => {
 export const reconstructPath = (from:any, current:any) => {
   console.log('reconstructPath from:', from);
   console.log('reconstructPath current', current);
+  // function reconstruct_path(cameFrom, current)
+  //   total_path := [current]
+  //   while current in cameFrom.Keys:
+  //       current := cameFrom[current]
+  //       total_path.append(current)
+  //   return total_path
+  let totalPath:any[] = [current];
+  while(isObjectInMapKeys(current, from)) {
+    console.log('current in cameFrom.keys()');
+    current = from[current];
+    totalPath.push(current);
+  }
+  return totalPath;
 }
 
 export const deleteObjectFromArray = (object:any, arr:any[]) => {
@@ -96,6 +114,18 @@ export const isObjectInArray = (object:any, arr:any[]) => {
   let result:boolean = false;
   for(let node of arr) {
     if(object.x === node.x && object.y === node.y) {
+      result = true;
+    }
+  }
+  return result;
+}
+
+export const isObjectInMapKeys = (object:any, map:any) => {
+  let arr:any[] = Array.from(map);
+  let result:boolean = false;
+  for(let i = 0; i < arr.length - 1; ++i) {
+    console.log('arr[i][0]', arr[i][0]);
+    if(arr[i][0].x === object.x && arr[i][0].y === object.y) {
       result = true;
     }
   }
