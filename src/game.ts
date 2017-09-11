@@ -7,6 +7,7 @@ import {
 } from './map/createMap';
 import {showObstacles} from './map/mapUtils';
 import {h, aStar} from './path/AStar';
+import {drawPath} from './path/drawPath';
 
 let gridSize = 100;
 
@@ -50,7 +51,8 @@ canvas.addEventListener('contextmenu', (e) => {
       console.log('grid', grid, 'was clicked');
       finishNode = grid;
       console.log('h', h(startNode, finishNode));
-      aStar(startNode, finishNode);
+      let path:any = aStar(startNode, finishNode);
+      drawPath(path);
     }
   }
 });

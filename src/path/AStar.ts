@@ -93,8 +93,8 @@ export const reconstructPath = (from:any, current:any) => {
   //   return total_path
   let totalPath:any[] = [current];
   while(isObjectInMapKeys(current, from)) {
-    console.log('current in cameFrom.keys()');
-    current = from[current];
+    console.log('current', current);
+    current = from.get(current);
     totalPath.push(current);
   }
   return totalPath;
@@ -120,15 +120,25 @@ export const isObjectInArray = (object:any, arr:any[]) => {
   return result;
 }
 
+export const getObjectFromMap = (object:any, map:any) => {
+  let arr:any[] = Array.from(map);
+  for(let i = 0; i < arr.length - 1; ++i) {
+    for(let j = 0; j < arr[i].length; ++j) {
+
+    }
+  }
+}
+
 export const isObjectInMapKeys = (object:any, map:any) => {
   let arr:any[] = Array.from(map);
   let result:boolean = false;
-  for(let i = 0; i < arr.length - 1; ++i) {
-    console.log('arr[i][0]', arr[i][0]);
+  for(let i = 0; i < arr.length; ++i) {
+    //console.log('object', object);
     if(arr[i][0].x === object.x && arr[i][0].y === object.y) {
       result = true;
     }
   }
+  console.log('result', result);
   return result;
 }
 
