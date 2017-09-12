@@ -16,6 +16,12 @@ import {showObstacles} from './map/mapUtils';
 import {h, aStar} from './path/AStar';
 import {drawPath} from './path/drawPath';
 
+import Warrior from './warrior/Warrior';
+import {warriors, currentlyChosenWarrior} from './store/warriorStore';
+import {onChooseWarrior, createWarrior} from './warrior/warriorAction';
+
+let warrior = createWarrior('barbarian', 80, 160, 5);
+
 drawGrid();
 console.log('map', map);
 
@@ -28,16 +34,17 @@ canvas.addEventListener('click', (e) => {
   let y = e.offsetY; // get Y
   console.log('Position x', e.offsetX); // get X
   console.log('Position y', e.offsetY); // get Y
-  for(let grid of map) {
-    let bottomRightX = grid.x + gridSize;
-    let bottomRightY = grid.y + gridSize;
-    if(x >= grid.x && x < bottomRightX && y >= grid.y && y < bottomRightY) {
-      ctx.fillStyle = 'green';
-      ctx.fillRect(grid.x, grid.y, gridSize , gridSize);
-      startNode = grid;
-      console.log('grid', grid, 'was clicked');
-    }
-  }
+  // for(let grid of map) {
+  //   let bottomRightX = grid.x + gridSize;
+  //   let bottomRightY = grid.y + gridSize;
+  //   if(x >= grid.x && x < bottomRightX && y >= grid.y && y < bottomRightY) {
+  //     ctx.fillStyle = 'green';
+  //     ctx.fillRect(grid.x, grid.y, gridSize , gridSize);
+  //     startNode = grid;
+  //     console.log('grid', grid, 'was clicked');
+  //   }
+  // }
+  onChooseWarrior(warriors, x, y);
 });
 
 // set onClickListener for right mouse event
