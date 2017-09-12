@@ -6,6 +6,10 @@ import {
   gridSize
 } from '../map/mapConfig';
 
+import {
+  deleteObjectFromArray,
+} from '../utils/objUtils';
+
 export const createNodes = () => {
   let map:any[] = [];
   let value = 1;
@@ -38,17 +42,25 @@ export const neighbours = (node:any) => {
   ];
   let result = [];
   for(let dir of dirs) {
-    let neighbor = {
+    let neighbour = {
       x: node.x + dir.x,
       y: node.y + dir.y,
       distance: dir.distance
     }
-    if(neighbor.x >= 0 && neighbor.x < 1000 && neighbor.y >= 0 && neighbor.y < 600) {
-      result.push({
-        x: neighbor.x,
-        y: neighbor.y,
-        distance: neighbor.distance,
-      });
+    if(neighbour.x >= 0 && neighbour.x < 1000 && neighbour.y >= 0 && neighbour.y < 600) {
+        let finded:boolean = false;
+        for(let node of map) {
+          if(neighbour.x === node.x && neighbour.y === node.y) {
+            finded = true;
+          }
+        }
+        if(finded) {
+          result.push({
+            x: neighbour.x,
+            y: neighbour.y,
+            distance: neighbour.distance,
+          });
+        }
     }
   }
   return result;
@@ -61,5 +73,16 @@ export const addNeighbours = (map:any[]) => {
   }
 }
 
-export const map = createNodes();
+export const createObstacles = (positionX:number, positionY:number) => {
+  let node = {
+    x: positionX,
+    y: positionY
+  };
+  ctx.fillRect(node.x, node.y, gridSize, gridSize);
+  return deleteObjectFromArray(node, map)
+}
+
+export let map = createNodes();
+map = createObstacles(500, 100);
+map = createObstacles(500, 200);
 addNeighbours(map);

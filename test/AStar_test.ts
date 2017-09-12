@@ -2,11 +2,14 @@ import { expect, should, assert} from 'chai';
 
 import {
   getMinFScore,
-  deleteObjectFromArray,
-  isObjectInArray,
   unclosedNeigbours,
   isObjectInMapKeys
 } from '../src/path/AStar';
+
+import {
+  deleteObjectFromArray,
+  isObjectInArray,
+} from '../src/utils/objUtils';
 
 let open:any = [];
 

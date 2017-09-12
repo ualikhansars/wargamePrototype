@@ -1,4 +1,11 @@
-import {canvas, ctx} from './map/mapConfig';
+import {
+  canvas,
+  ctx,
+  WIDTH,
+  HEIGHT,
+  gridSize
+} from './map/mapConfig';
+
 import {drawGrid} from './map/drawGrid';
 import {
   addNeighbours,
@@ -9,10 +16,8 @@ import {showObstacles} from './map/mapUtils';
 import {h, aStar} from './path/AStar';
 import {drawPath} from './path/drawPath';
 
-let gridSize = 100;
-
 drawGrid();
-console.log(map);
+console.log('map', map);
 
 let startNode:any;
 let finishNode:any;
