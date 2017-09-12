@@ -7,6 +7,8 @@ class Warrior {
   centerX: number;
   centerY: number;
   radius: number;
+  moveToNodeX: number;
+  moveToNodeY: number;
 
   constructor(name:string, x:number, y:number, radius:number) {
     this.name = name;

@@ -18,12 +18,16 @@ import {drawPath} from './path/drawPath';
 
 import Warrior from './warrior/Warrior';
 import {warriors, currentlyChosenWarrior} from './store/warriorStore';
-import {onChooseWarrior, createWarrior} from './warrior/warriorAction';
+import {
+  onChooseWarrior,
+  createWarrior,
+  assignWarriorMoveToPosition} from './warrior/warriorAction';
 
 let warrior = createWarrior('barbarian', 80, 160, 5);
 
 drawGrid();
 console.log('map', map);
+console.log('currentlyChosenWarrior', currentlyChosenWarrior);
 
 let startNode:any;
 let finishNode:any;
@@ -45,6 +49,7 @@ canvas.addEventListener('click', (e) => {
   //   }
   // }
   onChooseWarrior(warriors, x, y);
+  console.log('currentlyChosenWarrior', currentlyChosenWarrior);
 });
 
 // set onClickListener for right mouse event
@@ -54,17 +59,18 @@ canvas.addEventListener('contextmenu', (e) => {
   let x = e.offsetX; // get X
   let y = e.offsetY; // get Y
 
-  for(let grid of map) {
-    let bottomRightX = grid.x + gridSize;
-    let bottomRightY = grid.y + gridSize;
-    if(x >= grid.x && x < bottomRightX && y >= grid.y && y < bottomRightY) {
-      ctx.fillStyle = 'red';
-      ctx.fillRect(grid.x, grid.y, gridSize, gridSize);
-      console.log('grid', grid, 'was clicked');
-      finishNode = grid;
-      console.log('h', h(startNode, finishNode));
-      let path:any = aStar(startNode, finishNode);
-      drawPath(path);
-    }
-  }
+  // for(let grid of map) {
+  //   let bottomRightX = grid.x + gridSize;
+  //   let bottomRightY = grid.y + gridSize;
+  //   if(x >= grid.x && x < bottomRightX && y >= grid.y && y < bottomRightY) {
+  //     ctx.fillStyle = 'red';
+  //     ctx.fillRect(grid.x, grid.y, gridSize, gridSize);
+  //     console.log('grid', grid, 'was clicked');
+  //     finishNode = grid;
+  //     console.log('h', h(startNode, finishNode));
+  //     let path:any = aStar(startNode, finishNode);
+  //     drawPath(path);
+  //   }
+  // }
+  assignWarriorMoveToPosition(currentlyChosenWarrior, x, y);
 });

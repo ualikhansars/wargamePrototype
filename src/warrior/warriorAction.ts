@@ -1,5 +1,9 @@
 import {gridSize} from '../map/mapConfig';
-import {warriors, currentlyChosenWarrior} from '../store/warriorStore';
+import {
+  warriors,
+  currentlyChosenWarrior,
+  assignCurrentlyChosenWarrior
+} from '../store/warriorStore';
 import {ctx} from '../map/mapConfig';
 import Warrior from './Warrior';
 
@@ -10,8 +14,11 @@ export const onChooseWarrior = (warriors:any[], mouseX:number, mouseY:number) =>
     let bottomRightY = warrior.y + gridSize;
     if(mouseX >= warrior.x && mouseX < bottomRightX && mouseY >= warrior.y && mouseY < bottomRightY) {
       console.log('warrior', warrior.name, ' was chosen');
+      foundedWarrior = warrior;
     }
   }
+  assignCurrentlyChosenWarrior(foundedWarrior);
+  console.log('currentlyChosenWarrior', currentlyChosenWarrior);
 }
 
 export const drawWarrior = (warrior:any) => {
@@ -20,6 +27,13 @@ export const drawWarrior = (warrior:any) => {
     ctx.fillStyle = '#d92510';
     ctx.fill();
     ctx.closePath();
+}
+
+export const assignWarriorMoveToPosition = (warrior:any, x:number, y:number) => {
+  //console.error('assignMoveToPosition');
+  warrior.moveToNodeX = x;
+  warrior.moveToNodeY = y;
+  console.log(warrior.name + ' is moving to node:' + warrior.moveToNodeX + ' y:' + warrior.moveToNodeY);
 }
 
 // create Unit and immediatly push it into units array
