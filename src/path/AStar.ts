@@ -1,8 +1,14 @@
-import {neighbours, map} from '../map/createMap';
+import {neighbours} from '../map/createMap';
 import {
   deleteObjectFromArray,
   isObjectInArray
 } from '../utils/objUtils';
+
+import {
+  getMinFScore,
+  unclosedNeigbours,
+  isObjectInMapKeys
+} from './aStarUtils';
 
 export const aStar = (startNode:any, finishNode:any) => {
   // the set of currently discovered nodes that are not evaluated yet
@@ -65,15 +71,7 @@ export const h = (startNode:any, finishNode:any) => {
   return D * (dx + dy) + (D2 - 2 * D) * Math.min(dx, dy);
 }
 
-export const getMinFScore = (open:any[]) => {
-  let min = 0;
-  for(let i = 1; i < open.length - 1; ++i) {
-    if(open[min].fScore > open[i].fScore) {
-      min = i;
-    }
-  }
-  return open[min];
-}
+
 
 export const reconstructPath = (from:any, current:any) => {
   console.log('reconstructPath from:', from);
@@ -95,46 +93,4 @@ export const reconstructPath = (from:any, current:any) => {
     totalPath.push(reversePath[i]);
   }
   return totalPath;
-}
-
-
-
-
-
-export const getObjectFromMap = (object:any, map:any) => {
-  let arr:any[] = Array.from(map);
-  for(let i = 0; i < arr.length - 1; ++i) {
-    for(let j = 0; j < arr[i].length; ++j) {
-
-    }
-  }
-}
-
-export const isObjectInMapKeys = (object:any, map:any) => {
-  let arr:any[] = Array.from(map);
-  let result:boolean = false;
-  for(let i = 0; i < arr.length; ++i) {
-    //console.log('object', object);
-    if(arr[i][0].x === object.x && arr[i][0].y === object.y) {
-      result = true;
-    }
-  }
-  console.log('result', result);
-  return result;
-}
-
-export const unclosedNeigbours = (current:any, closed:any) => {
-  let neighboursNotInClosed = [];
-  for(let neighbour of current.neighbours) {
-    let isInClosed:boolean = false;
-    for(let node of closed) {
-      if(neighbour.x === node.x && neighbour.y === node.y) {
-        isInClosed = true;
-      }
-    }
-    if(!isInClosed) {
-      neighboursNotInClosed.push(neighbour);
-    }
-  }
-  return neighboursNotInClosed;
 }

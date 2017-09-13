@@ -4,7 +4,7 @@ import {
   getMinFScore,
   unclosedNeigbours,
   isObjectInMapKeys
-} from '../src/path/AStar';
+} from '../src/path/aStarUtils';
 
 import {
   deleteObjectFromArray,
@@ -48,29 +48,6 @@ describe('A* Algorithm tests', function() {
     });
   });
 
-  describe('isObjectInMapKeys', function() {
-    it('return for node2 shoule be true ', function() {
-      assert.equal(isObjectInMapKeys(node2, from), true);
-    });
-    it('return for node3 should be false ', function() {
-      assert.equal(isObjectInArray(node3, from), false);
-    });
-    it('return for node4 should be false ', function() {
-      assert.equal(isObjectInArray(node4, from), false);
-    });
-  });
-
-  describe('IsObjectInArray', function() {
-    it('find node {x: 11, y: 31, fScore: 4000}', function() {
-      assert.equal(isObjectInArray(node2, open), true);
-    });
-    it('find node {x: 12, y: 30, fScore: 3000}', function() {
-      assert.equal(isObjectInArray(node1, open), true);
-    });
-    it('find node {x: 134, y: 94, fScore: 6589}', function() {
-      assert.equal(isObjectInArray({x: 134, y: 94, fScore: 6589}, open), false);
-    });
-  });
 
   describe('Delete node from map', function() {
     it('Delete node {x: 27, y: 52, fScore: 2800}', function() {

@@ -24,8 +24,8 @@ export let updateWarrior = (warrior:any, path:any[], i:number=0) => {
   drawWarrior(warrior);
   i++;
   if(i !== updatedPath.length) {
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       updateWarrior(warrior, updatedPath, i);
-    });
+    }, 300);
   }
 }
