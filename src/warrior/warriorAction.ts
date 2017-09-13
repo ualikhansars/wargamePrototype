@@ -14,6 +14,7 @@ export const onChooseWarrior = (warriors:any[], mouseX:number, mouseY:number) =>
     let bottomRightY = warrior.y + gridSize;
     if(mouseX >= warrior.x && mouseX < bottomRightX && mouseY >= warrior.y && mouseY < bottomRightY) {
       console.log('warrior', warrior.name, ' was chosen');
+      warrior.isCurrentlyChosen = true;
       foundedWarrior = warrior;
     }
   }
@@ -31,9 +32,13 @@ export const drawWarrior = (warrior:any) => {
 
 export const assignWarriorMoveToPosition = (warrior:any, x:number, y:number) => {
   //console.error('assignMoveToPosition');
-  warrior.moveToNodeX = x;
-  warrior.moveToNodeY = y;
-  console.log(warrior.name + ' is moving to node:' + warrior.moveToNodeX + ' y:' + warrior.moveToNodeY);
+  if(warrior) {
+    warrior.moveToNodeX = x;
+    warrior.moveToNodeY = y;
+    console.log(warrior.name + ' is moving to node:' + warrior.moveToNodeX + ' y:' + warrior.moveToNodeY);
+  } else {
+    console.log('warrior not chosen');
+  }
 }
 
 // create Unit and immediatly push it into units array

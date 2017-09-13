@@ -65,17 +65,6 @@ export const h = (startNode:any, finishNode:any) => {
   return D * (dx + dy) + (D2 - 2 * D) * Math.min(dx, dy);
 }
 
-// export const getMinFScore = (map:any) => {
-//   let open:any[] = Array.from(map);
-//   let min = 0;
-//   for(let i = 1; i < open.length - 1; ++i) {
-//     if(open[min][1] > open[i][1]) {
-//       min = i;
-//     }
-//   }
-//   return open[min];
-// }
-
 export const getMinFScore = (open:any[]) => {
   let min = 0;
   for(let i = 1; i < open.length - 1; ++i) {
@@ -95,11 +84,15 @@ export const reconstructPath = (from:any, current:any) => {
   //       current := cameFrom[current]
   //       total_path.append(current)
   //   return total_path
-  let totalPath:any[] = [current];
+  let reversePath:any[] = [current];
+  let totalPath:any[] = [];
   while(isObjectInMapKeys(current, from)) {
     console.log('current', current);
     current = from.get(current);
-    totalPath.push(current);
+    reversePath.push(current);
+  }
+  for(let i = reversePath.length - 1; i >= 0; i--) {
+    totalPath.push(reversePath[i]);
   }
   return totalPath;
 }
