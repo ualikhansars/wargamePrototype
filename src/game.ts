@@ -56,7 +56,7 @@ canvas.addEventListener('contextmenu', (e) => {
   assignWarriorMoveToPosition(currentlyChosenWarrior, x, y);
   let path:any = aStar(startNode, finishNode);
   if(currentlyChosenWarrior) {
-    updateWarrior(currentlyChosenWarrior, path);
+    updateWarrior(currentlyChosenWarrior, path, 0, x, y);
   }
   //drawPath(path);
 });

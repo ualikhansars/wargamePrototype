@@ -7,7 +7,8 @@ import {
 } from '../map/mapConfig';
 import {deleteObjectFromArray} from '../utils/objUtils';
 
-export let updateWarrior = (warrior:any, path:any[], i:number=0) => {
+export let updateWarrior = (warrior:any, path:any[], i:number=0, currentMoveToX:number, currentMoveToY:number) => {
+  if(currentMoveToX !== warrior.moveToNodeX || currentMoveToY !== warrior.moveToNodeY) return;
   let updatedPath = path;
   let node = path[i]; // get next node
   let nodeToClear = node;;
@@ -22,7 +23,7 @@ export let updateWarrior = (warrior:any, path:any[], i:number=0) => {
   i++;
   if(i !== updatedPath.length) {
     setTimeout(() => {
-      updateWarrior(warrior, updatedPath, i);
+      updateWarrior(warrior, updatedPath, i, currentMoveToX, currentMoveToY);
     }, 300);
   }
 }
