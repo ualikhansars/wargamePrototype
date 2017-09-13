@@ -102,7 +102,6 @@ export const createObstacles = (startX:number, finishX:number, startY:number, fi
       ctx.fillRect(x, y, gridSize, gridSize);
     }
   }
-  console.log('newMap', newMap);
   return newMap;
 }
 

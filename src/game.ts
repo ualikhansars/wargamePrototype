@@ -33,16 +33,12 @@ drawGrid();
 console.log('map', map);
 console.log('currentlyChosenWarrior', currentlyChosenWarrior);
 
-let startNode:any;
-let finishNode:any;
-
 canvas.addEventListener('click', (e) => {
   console.error('Click');
   let x = e.offsetX; // get X
   let y = e.offsetY; // get Y
   console.log('Position x', e.offsetX); // get X
   console.log('Position y', e.offsetY); // get Y
-  startNode = getNodeFromMap(x, y);
   onChooseWarrior(warriors, x, y);
   console.log('currentlyChosenWarrior', currentlyChosenWarrior);
 });
@@ -53,7 +49,10 @@ canvas.addEventListener('contextmenu', (e) => {
   e.preventDefault();
   let x = e.offsetX; // get X
   let y = e.offsetY; // get Y
+  let startNode = getNodeFromMap(currentlyChosenWarrior.x, currentlyChosenWarrior.y);
   let finishNode = getNodeFromMap(x, y);
+  console.error('startNode', startNode);
+  console.error('finishNode', finishNode);
   assignWarriorMoveToPosition(currentlyChosenWarrior, x, y);
   let path:any = aStar(startNode, finishNode);
   if(currentlyChosenWarrior) {
