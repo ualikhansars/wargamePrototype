@@ -24,10 +24,21 @@ import {warriors, currentlyChosenWarrior} from './store/warriorStore';
 import {
   onChooseWarrior,
   createWarrior,
-  assignWarriorMoveToPosition} from './warrior/warriorAction';
+  assignWarriorMoveToPosition,
+} from './warrior/warriorAction';
 import {updateWarrior} from './warrior/warriorMovement';
 
+import {
+  createUnit,
+  onChooseUnit
+} from './unit/unitActions';
+import {
+  units,
+  currentlyChosenUnit
+} from './store/unitStore';
+
 let warrior = createWarrior('barbarian', 80, 160, 5);
+createUnit('testUnit', 6, 240, 420);
 
 drawGrid();
 console.log('map', map);
@@ -40,6 +51,7 @@ canvas.addEventListener('click', (e) => {
   console.log('Position x', e.offsetX); // get X
   console.log('Position y', e.offsetY); // get Y
   onChooseWarrior(warriors, x, y);
+  onChooseUnit(units, currentlyChosenWarrior);
   console.log('currentlyChosenWarrior', currentlyChosenWarrior);
 });
 

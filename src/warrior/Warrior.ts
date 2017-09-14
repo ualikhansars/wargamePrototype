@@ -10,6 +10,7 @@ class Warrior {
   moveToNodeX: number;
   moveToNodeY: number;
   isCurrentlyChosen: boolean = false;
+  positionInUnit: number;
 
   constructor(name:string, x:number, y:number, radius:number) {
     this.name = name;
@@ -28,6 +29,10 @@ class Warrior {
   setY(y:number) {
     this.y = y;
     this.centerY = y + (gridSize / 2);
+  }
+
+  assignPosition(newPosition: number) {
+    this.positionInUnit = newPosition;
   }
 }
 
