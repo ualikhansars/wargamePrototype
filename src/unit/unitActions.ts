@@ -8,7 +8,26 @@ import {
   assignCurrentlyChosenUnit
 } from '../store/unitStore';
 
-export const drawUnit = (unit:any, name:string, radius:number) => {
+// export const drawUnit = (unit:any, radius:number) => {
+//   let startX = unit.commanderPositionX;
+//   let startY = unit.commanderPositionY;
+//   let i = 1;
+//   let row = unit.quantity / 2;
+//   let col = Math.ceil(unit.quantity / row);
+//   let finishX = startX + ((row - 1) * gridSize);
+//   let finishY = startY + ((col - 1) * gridSize);
+//   for(let y = startX; y <= finishY; y += gridSize) {
+//     if(i <= unit.quantity) {
+//       for(let x = startX; x <= finishX;  x+= gridSize) {
+//         let currentWarrior = createWarrior(unit.name, x, y, radius);
+//         currentWarrior.assignPosition(i);
+//         i++;
+//       }
+//     }
+//   }
+// }
+
+export const addWarriorsToUnit = (unit:any) => {
   let startX = unit.commanderPositionX;
   let startY = unit.commanderPositionY;
   let i = 1;
@@ -16,11 +35,13 @@ export const drawUnit = (unit:any, name:string, radius:number) => {
   let col = Math.ceil(unit.quantity / row);
   let finishX = startX + ((row - 1) * gridSize);
   let finishY = startY + ((col - 1) * gridSize);
+  let radius = gridSize / 4;
   for(let y = startX; y <= finishY; y += gridSize) {
     if(i <= unit.quantity) {
       for(let x = startX; x <= finishX;  x+= gridSize) {
-        let currentWarrior = createWarrior(name, x, y, radius);
+        let currentWarrior = createWarrior(unit.name, x, y, radius);
         currentWarrior.assignPosition(i);
+        unit.addWarriorToUnit(currentWarrior);
         i++;
       }
     }
@@ -30,7 +51,7 @@ export const drawUnit = (unit:any, name:string, radius:number) => {
 export const createUnit = (name:string, quantity:number, posX:number, posY: number) => {
   let newUnit = new Unit(name, quantity, posX, posY);
   let radius = gridSize / 4;
-  drawUnit(newUnit, name, radius);
+  addWarriorsToUnit(newUnit);
   units.push(newUnit);
 }
 
@@ -39,9 +60,11 @@ export const createUnit = (name:string, quantity:number, posX:number, posY: numb
 // has been chosen
 export const onChooseUnit = (units:any, currentlyChosenWarrior:any) => {
   let foundedUnit = null;
-  for(let unit of units) {
-    if(currentlyChosenWarrior.name === unit.name) {
-      foundedUnit = unit;
+  if(currentlyChosenWarrior) {
+    for(let unit of units) {
+      if(currentlyChosenWarrior.name === unit.name) {
+        foundedUnit = unit;
+      }
     }
   }
   assignCurrentlyChosenUnit(foundedUnit);
