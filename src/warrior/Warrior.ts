@@ -11,6 +11,8 @@ class Warrior {
   moveToNodeY: number;
   isCurrentlyChosen: boolean = false;
   positionInUnit: number;
+  rowInUnit: number;
+  colInUnit: number;
 
   constructor(name:string, x:number, y:number, radius:number) {
     this.name = name;

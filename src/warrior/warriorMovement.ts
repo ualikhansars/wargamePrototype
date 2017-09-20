@@ -8,7 +8,11 @@ import {
 import {deleteObjectFromArray} from '../utils/objUtils';
 
 export let updateWarrior = (warrior:any, path:any[], i:number=0, currentMoveToX:number, currentMoveToY:number) => {
-  if(currentMoveToX !== warrior.moveToNodeX || currentMoveToY !== warrior.moveToNodeY) return;
+  console.log('updateWarrior');
+  if(currentMoveToX !== warrior.moveToNodeX || currentMoveToY !== warrior.moveToNodeY) {
+    console.log('new destination has been chosen');
+    return;
+  }
   let updatedPath = path;
   let node = path[i]; // get next node
   let nodeToClear = node;;

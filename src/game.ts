@@ -30,12 +30,17 @@ import {updateWarrior} from './warrior/warriorMovement';
 
 import {
   createUnit,
-  onChooseUnit
+  onChooseUnit,
+  onChangeWarriorPositionInUnit
 } from './unit/unitActions';
 import {
   units,
   currentlyChosenUnit
 } from './store/unitStore';
+
+import {
+  calcDestinationAngleInDegrees
+} from './unit/unitUtils';
 
 let warrior = createWarrior('barbarian', 80, 160, 5);
 createUnit('testUnit', 6, 240, 420);
@@ -61,14 +66,18 @@ canvas.addEventListener('contextmenu', (e) => {
   e.preventDefault();
   let x = e.offsetX; // get X
   let y = e.offsetY; // get Y
-  let startNode = getNodeFromMap(currentlyChosenWarrior.x, currentlyChosenWarrior.y);
+  let startNode = getNodeFromMap(currentlyChosenUnit.commanderPositionX, currentlyChosenUnit.commanderPositionY);
   let finishNode = getNodeFromMap(x, y);
   console.error('startNode', startNode);
   console.error('finishNode', finishNode);
   assignWarriorMoveToPosition(currentlyChosenWarrior, x, y);
-  let path:any = aStar(startNode, finishNode);
-  if(currentlyChosenWarrior) {
-    updateWarrior(currentlyChosenWarrior, path, 0, x, y);
-  }
+
+  assignWarriorMoveToPosition(currentlyChosenWarrior, x, y);
+  console.error('Angle', calcDestinationAngleInDegrees(currentlyChosenUnit, x, y));
+  // let path:any = aStar(startNode, finishNode);
+  // if(currentlyChosenUnit) {
+  //  onChangeWarriorPositionInUnit(currentlyChosenUnit,path, 0, x, y);
+  // }
+
   //drawPath(path);
 });

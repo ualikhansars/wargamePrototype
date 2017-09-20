@@ -34,9 +34,9 @@ export const aStar = (startNode:any, finishNode:any) => {
   // fScore.set(startNode, gScore.get(startNode) + h(startNode, finishNode));
   while(open) {
     let current:any = getMinFScore(open);
-    console.log('current', current);
+    //console.log('current', current);
     if(current.x === finishNode.x && current.y === finishNode.y) {
-      console.error('Path', reconstructPath(from, current));
+      //console.error('Path', reconstructPath(from, current));
       return reconstructPath(from, current);
     }
     open = deleteObjectFromArray(current, open);
@@ -74,8 +74,6 @@ export const h = (startNode:any, finishNode:any) => {
 
 
 export const reconstructPath = (from:any, current:any) => {
-  console.log('reconstructPath from:', from);
-  console.log('reconstructPath current', current);
   // function reconstruct_path(cameFrom, current)
   //   total_path := [current]
   //   while current in cameFrom.Keys:
@@ -85,7 +83,6 @@ export const reconstructPath = (from:any, current:any) => {
   let reversePath:any[] = [current];
   let totalPath:any[] = [];
   while(isObjectInMapKeys(current, from)) {
-    console.log('current', current);
     current = from.get(current);
     reversePath.push(current);
   }
