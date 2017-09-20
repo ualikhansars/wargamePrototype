@@ -6,6 +6,8 @@ class Unit {
   commanderPositionX: number;
   commanderPositionY: number;
   warriors: any[] = [];
+  col: number;
+  row: number;
 
   constructor(name:string, quantity:number, posX:number, posY:number) {
     this.name = name;

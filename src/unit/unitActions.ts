@@ -45,6 +45,8 @@ export const addWarriorsToUnit = (unit:any) => {
   let radius = gridSize / 4;
   let unitRow = 1; // to give warrior row and column position in unit
   let unitCol = 1;
+  unit.row = row; // add row instance for unit
+  unit.col = col; // add col instance for unit
   for(let y = startX; y <= finishY; y += gridSize) {
     if(i <= unit.quantity) {
       for(let x = startX; x <= finishX;  x+= gridSize) {
