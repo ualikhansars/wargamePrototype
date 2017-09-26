@@ -1,6 +1,8 @@
 import { expect, should, assert} from 'chai';
 import Unit from '../src/unit/Unit';
-import {getClosestWarriorToDestination} from '../src/unit/unitUtils';
+import {
+  getClosestWarriorToDestination
+} from '../src/unit/unitUtils';
 
 let unit = new Unit('unit', 4, 40, 35);
 
@@ -14,6 +16,8 @@ let warriors = [
 for(let warrior of warriors) {
   unit.addWarriorToUnit(warrior);
 }
+
+console.error('unit' ,unit);
 
 describe('UnitUtils Tests', function() {
   describe('getClosestWarriorToDestination', function() {

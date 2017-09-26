@@ -13,6 +13,7 @@ class Warrior {
   positionInUnit: number;
   rowInUnit: number;
   colInUnit: number;
+  moveToNode: any;
 
   constructor(name:string, x:number, y:number, radius:number) {
     this.name = name;

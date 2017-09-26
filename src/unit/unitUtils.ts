@@ -13,6 +13,16 @@ export const getClosestWarriorToDestination = (unit:any, destX:number, destY:num
   return warriors[closest];
 }
 
+export const getCentralUnit = (unit:any) => {
+  let centralRow = Math.round(unit.row / 2);
+  let centralCol = Math.round(unit.col / 2);
+  for(let warrior of unit.warriors) {
+    if(warrior.colInUnit === centralCol && warrior.rowInUnit === centralRow) {
+      return warrior;
+    }
+  }
+}
+
  // get unit's position and destination position and return angle in radians between unit and destination
 export const calcDestinationAngleInDegrees = (unit:any, destX:number, destY:number):number => {
   //console.error('calcDestinationAngleInDegrees');

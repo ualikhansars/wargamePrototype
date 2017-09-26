@@ -51,6 +51,16 @@ describe('Object Utils Tests', function() {
       assert.equal(findedNode.y, 31);
       assert.equal(findedNode.fScore, 4000);
     });
+    it('find node6 {x: 39, y: 52, fScore: 2800}', function() {
+      let currentNode = {
+        x: 39,
+        y: 52
+      }
+      let findedNode = getNodeFromArray(currentNode, open);
+      assert.equal(findedNode.x, 39);
+      assert.equal(findedNode.y, 52);
+      assert.equal(findedNode.fScore, 2800);
+    });
   });
 
   describe('isObjectInMapKeys', function() {

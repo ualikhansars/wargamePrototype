@@ -42,6 +42,8 @@ import {
   calcDestinationAngleInDegrees
 } from './unit/unitUtils';
 
+import {moveToPosition} from './unit/unitMovement';
+
 let warrior = createWarrior('barbarian', 80, 160, 5);
 createUnit('testUnit', 6, 240, 420);
 
@@ -71,8 +73,7 @@ canvas.addEventListener('contextmenu', (e) => {
   console.error('startNode', startNode);
   console.error('finishNode', finishNode);
   assignWarriorMoveToPosition(currentlyChosenWarrior, x, y);
-
-  assignWarriorMoveToPosition(currentlyChosenWarrior, x, y);
+  moveToPosition(currentlyChosenUnit, finishNode);
   console.error('Angle', calcDestinationAngleInDegrees(currentlyChosenUnit, x, y));
   // let path:any = aStar(startNode, finishNode);
   // if(currentlyChosenUnit) {
