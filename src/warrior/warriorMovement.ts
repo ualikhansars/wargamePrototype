@@ -8,7 +8,7 @@ import {
 import {deleteObjectFromArray} from '../utils/objUtils';
 
 export let updateWarrior = (warrior:any, path:any[], i:number=0, currentMoveToX:number, currentMoveToY:number) => {
-  console.log('updateWarrior');
+  //console.log('updateWarrior');
   if(currentMoveToX !== warrior.moveToNode.x || currentMoveToY !== warrior.moveToNode.y) {
     console.log('new destination has been chosen');
     return;
@@ -28,6 +28,6 @@ export let updateWarrior = (warrior:any, path:any[], i:number=0, currentMoveToX:
   if(i !== updatedPath.length) {
     setTimeout(() => {
       updateWarrior(warrior, updatedPath, i, currentMoveToX, currentMoveToY);
-    }, 300);
+    }, 400);
   }
 }

@@ -31,25 +31,38 @@ export const moveToPosition = (unit:any, nextNode:any) => {
     warrior.moveToNode = moveToNode;
   }
   // command unit to move
-  while(movingWarriors.length > 0) {
-    console.error('movingWarriors:', movingWarriors);
-    let closest = getClosestWarriorToDestinationInArray(movingWarriors, nextNode.x, nextNode.y);
-    let startNode = getNodeFromMap(closest.x, closest.y);
-    let path:any = aStar(startNode, closest.moveToNode);
-    updateWarrior(closest, path, 0, closest.moveToNode.x, closest.moveToNode.y);
-    movingWarriors = deleteObjectFromArray(closest, movingWarriors);
-  }
+  // while(movingWarriors.length > 0) {
+  //   console.error('movingWarriors:', movingWarriors);
+  //   let closest = getClosestWarriorToDestinationInArray(movingWarriors, nextNode.x, nextNode.y);
+  //   let startNode = getNodeFromMap(closest.x, closest.y);
+  //   let path:any = aStar(startNode, closest.moveToNode);
+  //   updateWarrior(closest, path, 0, closest.moveToNode.x, closest.moveToNode.y);
+  //   movingWarriors = deleteObjectFromArray(closest, movingWarriors);
+  // }
+  unitMovement(movingWarriors, nextNode);
 }
 
 export const checkWarriorsPositions = (centralWarrior:any, currentWarrior:any) => {
   let centralCol = centralWarrior.colInUnit;
   let centralRow = centralWarrior.rowInUnit;
-  let currentRow = currentWarrior.colInUnit;
-  let currentCol = currentWarrior.rowInUnit;
+  let currentRow = currentWarrior.rowInUnit;
+  let currentCol = currentWarrior.colInUnit;
   let differenceInX = currentCol - centralCol;
   let differenceInY = currentRow - centralRow;
   return {
     differenceInX,
     differenceInY
   }
+}
+
+export const unitMovement = (movingWarriors:any[], nextNode:any) => {
+  if(movingWarriors.length === 0) {
+    return;
+  }
+  let closest = getClosestWarriorToDestinationInArray(movingWarriors, nextNode.x, nextNode.y);
+  let startNode = getNodeFromMap(closest.x, closest.y);
+  let path:any = aStar(startNode, closest.moveToNode);
+  updateWarrior(closest, path, 0, closest.moveToNode.x, closest.moveToNode.y);
+  movingWarriors = deleteObjectFromArray(closest, movingWarriors);
+  unitMovement(movingWarriors, nextNode);
 }
