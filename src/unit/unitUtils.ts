@@ -13,7 +13,21 @@ export const getClosestWarriorToDestination = (unit:any, destX:number, destY:num
   return warriors[closest];
 }
 
-export const getCentralUnit = (unit:any) => {
+export const getClosestWarriorToDestinationInArray = (warriors:any[], destX:number, destY:number) => {
+  let closest = 0;
+  let difference:number;
+  for(let i = 1; i <= warriors.length - 1; ++i) {
+    let currentUnitDifference = Math.sqrt(Math.pow(Math.abs(warriors[i].x - destX), 2) + Math.pow(Math.abs(warriors[i].y - destY), 2));
+    let previousUnitDifference = Math.sqrt(Math.pow(Math.abs(warriors[closest].x - destX), 2) + Math.pow(Math.abs(warriors[closest].y - destY), 2));
+
+    if(currentUnitDifference < previousUnitDifference) {
+      closest = i;
+    }
+  }
+  return warriors[closest];
+}
+
+export const getCentralWarriorInUnit = (unit:any) => {
   let centralRow = Math.round(unit.row / 2);
   let centralCol = Math.round(unit.col / 2);
   for(let warrior of unit.warriors) {

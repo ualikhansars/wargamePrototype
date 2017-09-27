@@ -1,4 +1,7 @@
-import {getCentralUnit} from './unitUtils';
+import {
+  getCentralWarriorInUnit,
+  getClosestWarriorToDestinationInArray
+} from './unitUtils';
 import {gridSize} from '../map/mapConfig';
 import {map} from '../map/createMap';
 import {getNodeFromMap} from '../path/drawPath';
@@ -11,7 +14,8 @@ import {aStar} from '../path/AStar';
 
 export const moveToPosition = (unit:any, nextNode:any) => {
   // assign moveToPositions to warriors
-  let centralWarrior = getCentralUnit(unit);
+  let movingWarriors = Object.assign([], unit.warriors);
+  let centralWarrior = getCentralWarriorInUnit(unit);
   let updatedWarriors = deleteObjectFromArray(centralWarrior, unit.warriors);
   //console.log('updatedWarriors', updatedWarriors);
   centralWarrior.moveToNode = nextNode;
@@ -25,6 +29,15 @@ export const moveToPosition = (unit:any, nextNode:any) => {
     let moveToNode = getNodeFromMap(x, y);
     console.error('moveToNode', moveToNode);
     warrior.moveToNode = moveToNode;
+  }
+  // command unit to move
+  while(movingWarriors.length > 0) {
+    console.error('movingWarriors:', movingWarriors);
+    let closest = getClosestWarriorToDestinationInArray(movingWarriors, nextNode.x, nextNode.y);
+    let startNode = getNodeFromMap(closest.x, closest.y);
+    let path:any = aStar(startNode, closest.moveToNode);
+    updateWarrior(closest, path, 0, closest.moveToNode.x, closest.moveToNode.y);
+    movingWarriors = deleteObjectFromArray(closest, movingWarriors);
   }
 }
 

@@ -9,7 +9,7 @@ import {deleteObjectFromArray} from '../utils/objUtils';
 
 export let updateWarrior = (warrior:any, path:any[], i:number=0, currentMoveToX:number, currentMoveToY:number) => {
   console.log('updateWarrior');
-  if(currentMoveToX !== warrior.moveToNodeX || currentMoveToY !== warrior.moveToNodeY) {
+  if(currentMoveToX !== warrior.moveToNode.x || currentMoveToY !== warrior.moveToNode.y) {
     console.log('new destination has been chosen');
     return;
   }
