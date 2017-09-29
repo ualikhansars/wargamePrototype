@@ -68,8 +68,8 @@ canvas.addEventListener('contextmenu', (e) => {
   e.preventDefault();
   let x = e.offsetX; // get X
   let y = e.offsetY; // get Y
-  let startNode = getNodeFromMap(currentlyChosenUnit.commanderPositionX, currentlyChosenUnit.commanderPositionY);
-  let finishNode = getNodeFromMap(x, y);
+  let startNode = getNodeFromMap(currentlyChosenUnit.commanderPositionX, currentlyChosenUnit.commanderPositionY, map);
+  let finishNode = getNodeFromMap(x, y, map);
   console.error('startNode', startNode);
   console.error('finishNode', finishNode);
   assignWarriorMoveToPosition(currentlyChosenWarrior, x, y);

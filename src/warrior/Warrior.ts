@@ -14,6 +14,7 @@ class Warrior {
   rowInUnit: number;
   colInUnit: number;
   moveToNode: any;
+  isMoving: boolean = false;
 
   constructor(name:string, x:number, y:number, radius:number) {
     this.name = name;
@@ -36,6 +37,14 @@ class Warrior {
 
   assignPosition(newPosition: number) {
     this.positionInUnit = newPosition;
+  }
+
+  setIsMovingToTrue() {
+    this.isMoving = true;
+  }
+
+  setIsMovingToFalse() {
+    this.isMoving = false;
   }
 }
 

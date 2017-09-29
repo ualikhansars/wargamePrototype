@@ -10,7 +10,7 @@ import {
   isObjectInMapKeys
 } from './aStarUtils';
 
-export const aStar = (startNode:any, finishNode:any) => {
+export const aStar = (startNode:any, finishNode:any, map:any[]) => {
   // the set of currently discovered nodes that are not evaluated yet
   // Initially only the start node is known
   let open:any[] = [];
@@ -49,7 +49,7 @@ export const aStar = (startNode:any, finishNode:any) => {
         neighbour.fScore = neighbour.gScore + h(neighbour, finishNode);
       }
       if(!isObjectInArray(neighbour, open)) { // create function
-        let nodeNeighbours = neighbours(neighbour);
+        let nodeNeighbours = neighbours(neighbour, map);
         neighbour.neighbours = nodeNeighbours;
         open.push(neighbour);
       }

@@ -1,20 +1,57 @@
 import {drawWarrior} from './warriorAction';
+import {warriors} from '../store/warriorStore';
+import {
+  map,
+  createWarriorObstacle,
+  addNeighbours
+} from '../map/createMap';
+import {getNodeFromMap} from '../path/drawPath';
 import {
   gridSize,
   ctx,
   WIDTH,
   HEIGHT
 } from '../map/mapConfig';
+import {aStar} from '../path/AStar';
 import {deleteObjectFromArray} from '../utils/objUtils';
 
 export let updateWarrior = (warrior:any, path:any[], i:number=0, currentMoveToX:number, currentMoveToY:number) => {
   //console.log('updateWarrior');
+  warrior.setIsMovingToTrue();
   if(currentMoveToX !== warrior.moveToNode.x || currentMoveToY !== warrior.moveToNode.y) {
     console.log('new destination has been chosen');
+    warrior.setIsMovingToFalse();
     return;
   }
   let updatedPath = path;
-  let node = path[i]; // get next node
+  let node = updatedPath[i]; // get next node
+
+  // ally warrior is on the destination position
+  // currentWarrior should stop moving
+  if(checkOtherWarriorsPosition(warriors, warrior, node.x, node.y) && i === updatedPath.length - 1) {
+    warrior.moveToNode.x = warrior.x; // set moveToNode value to current warrior position
+    warrior.moveToNode.y = warrior.y;
+    warrior.setIsMovingToFalse();
+    return;
+  }
+  if(checkOtherWarriorsPosition(warriors, warrior, node.x, node.y)) {
+    // unit has another allies' unit on its way
+    console.error('updateUnit: another unit is on the way x:',node.x,'y:', node.y);
+    let updatedMap = map;
+    updatedMap = createWarriorObstacle(node.x, node.y, updatedMap);
+    addNeighbours(updatedMap);
+    console.log('deleted Node', node);
+    console.log('updatedMap', updatedMap);
+    console.log('node', node);
+    let startNode = getNodeFromMap(warrior.x, warrior.y, updatedMap);
+    let finishNode = getNodeFromMap(currentMoveToX, currentMoveToY, updatedMap);
+    let newPath:any = aStar(startNode, finishNode, updatedMap);
+
+    console.error('newPath', newPath);
+    updateWarrior(warrior, newPath, 0, currentMoveToX, currentMoveToY);
+    return;
+  }
+
   let nodeToClear = node;;
   if(i !== 0) {
     nodeToClear = updatedPath[i - 1];

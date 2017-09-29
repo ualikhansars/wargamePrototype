@@ -29,7 +29,7 @@ export const createNodes = () => {
   return map;
 }
 
-export const neighbours = (node:any) => {
+export const neighbours = (node:any, map:any[]) => {
   let dirs = [
     {x: -gridSize, y: -gridSize, distance: 14},
     {x: 0, y: -gridSize, distance: 10},
@@ -68,9 +68,17 @@ export const neighbours = (node:any) => {
 
 export const addNeighbours = (map:any[]) => {
   for(let node of map) {
-    let n = neighbours(node);
+    let n = neighbours(node, map);
     node.neighbours = n;
   }
+}
+
+export const createWarriorObstacle = (positionX:number, positionY:number, map:any[]) => {
+  let node = {
+    x: positionX,
+    y: positionY
+  };
+  return deleteObjectFromArray(node, map)
 }
 
 export const createOneObstacle = (positionX:number, positionY:number, type:string='forest') => {

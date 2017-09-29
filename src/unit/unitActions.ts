@@ -1,6 +1,7 @@
 import {createWarrior} from '../warrior/warriorAction';
 import {gridSize} from '../map/mapConfig';
 import {updateWarrior} from '../warrior/warriorMovement';
+import {map} from '../map/createMap'
 import Unit from './Unit';
 
 import {
@@ -23,9 +24,9 @@ export const onChangeWarriorPositionInUnit = (unit:any, path:any[], i:number=0, 
   let row = unit.quantity / 2;
   let col = Math.ceil(unit.quantity / row);
   for(let warrior of unit.warriors) {
-    let startNode = getNodeFromMap(currentlyChosenUnit.commanderPositionX, currentlyChosenUnit.commanderPositionY);
-    let finishNode = getNodeFromMap(currentMoveToX, currentMoveToY);
-    let path:any = aStar(startNode, finishNode);
+    let startNode = getNodeFromMap(currentlyChosenUnit.commanderPositionX, currentlyChosenUnit.commanderPositionY, map);
+    let finishNode = getNodeFromMap(currentMoveToX, currentMoveToY, map);
+    let path:any = aStar(startNode, finishNode, map);
     assignWarriorMoveToPosition(warrior, currentMoveToX, currentMoveToY);
     updateWarrior(warrior, path, i, currentMoveToX, currentMoveToY);
     currentMoveToX += gridSize;

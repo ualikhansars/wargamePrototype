@@ -26,7 +26,7 @@ export const moveToPosition = (unit:any, nextNode:any) => {
     let x:number = nextNode.x + (differenceInX * gridSize);
     let y:number = nextNode.y + (differenceInY * gridSize);
     console.error('x:', x, 'y:', y);
-    let moveToNode = getNodeFromMap(x, y);
+    let moveToNode = getNodeFromMap(x, y, map);
     console.error('moveToNode', moveToNode);
     warrior.moveToNode = moveToNode;
   }
@@ -60,8 +60,8 @@ export const unitMovement = (movingWarriors:any[], nextNode:any) => {
     return;
   }
   let closest = getClosestWarriorToDestinationInArray(movingWarriors, nextNode.x, nextNode.y);
-  let startNode = getNodeFromMap(closest.x, closest.y);
-  let path:any = aStar(startNode, closest.moveToNode);
+  let startNode = getNodeFromMap(closest.x, closest.y, map);
+  let path:any = aStar(startNode, closest.moveToNode, map);
   updateWarrior(closest, path, 0, closest.moveToNode.x, closest.moveToNode.y);
   movingWarriors = deleteObjectFromArray(closest, movingWarriors);
   unitMovement(movingWarriors, nextNode);
