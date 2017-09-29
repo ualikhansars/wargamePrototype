@@ -19,15 +19,29 @@ export let updateWarrior = (warrior:any, path:any[], i:number=0, currentMoveToX:
   if(i !== 0) {
     nodeToClear = updatedPath[i - 1];
   }
-  ctx.clearRect(nodeToClear.x, nodeToClear.y, gridSize, gridSize);
-  warrior.setX(node.x); // calculate center of the current node
-  warrior.setY(node.y);
-  //console.log('warrior.x', warrior.x, 'warrior.y', warrior.y);
-  drawWarrior(warrior);
+  moveToNextNode(warrior, node, nodeToClear);
   i++;
   if(i !== updatedPath.length) {
     setTimeout(() => {
       updateWarrior(warrior, updatedPath, i, currentMoveToX, currentMoveToY);
     }, 400);
   }
+}
+
+// check if nextNode is occupied by other warrior
+export const checkOtherWarriorsPosition = (warriors:any[], currentUnit:any, x:number, y:number) => {
+  let updatedWarriors = deleteObjectFromArray(currentUnit, warriors);
+  for(let warrior of updatedWarriors) {
+    if(warrior.x === x && warrior.y === y) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export const moveToNextNode = (warrior:any, node:any, previousNode:any) => {
+  ctx.clearRect(previousNode.x, previousNode.y, gridSize, gridSize);
+  warrior.setX(node.x); // calculate center of the current node
+  warrior.setY(node.y);
+  drawWarrior(warrior);
 }
