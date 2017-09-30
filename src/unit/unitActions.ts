@@ -95,7 +95,3 @@ let getUnitCommander = (unit:any) => {
     }
   }
 }
-
-export const updateUnit = (unit:any, path:any[], i:number=0, currentMoveToX:number, currentMoveToY:number) => {
-
-}

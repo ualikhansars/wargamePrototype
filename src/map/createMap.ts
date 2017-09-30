@@ -67,10 +67,12 @@ export const neighbours = (node:any, map:any[]) => {
 }
 
 export const addNeighbours = (map:any[]) => {
-  for(let node of map) {
+  let updatedMap = Object.assign([], map);
+  for(let node of updatedMap) {
     let n = neighbours(node, map);
     node.neighbours = n;
   }
+  return updatedMap;
 }
 
 export const createWarriorObstacle = (positionX:number, positionY:number, map:any[]) => {
@@ -78,10 +80,10 @@ export const createWarriorObstacle = (positionX:number, positionY:number, map:an
     x: positionX,
     y: positionY
   };
-  return deleteObjectFromArray(node, map)
+  return deleteObjectFromArray(node, map);
 }
 
-export const createOneObstacle = (positionX:number, positionY:number, type:string='forest') => {
+export const createOneObstacle = (positionX:number, positionY:number, type:string='forest', map:any[]) => {
   let node = {
     x: positionX,
     y: positionY
@@ -93,8 +95,8 @@ export const createOneObstacle = (positionX:number, positionY:number, type:strin
   return deleteObjectFromArray(node, map)
 }
 
-export const createObstacles = (startX:number, finishX:number, startY:number, finishY:number, type:string='forest') => {
-  let newMap:any[] = map;
+export const createObstacles = (startX:number, finishX:number, startY:number, finishY:number, type:string='forest', map:any[]) => {
+  let newMap:any[] = Object.assign([], map);
   for(let x = startX; x <= finishX; x += gridSize) {
     for(let y = startY; y <= finishY; y += gridSize) {
       let node = {
@@ -114,12 +116,12 @@ export const createObstacles = (startX:number, finishX:number, startY:number, fi
 }
 
 export let map = createNodes();
-map = createObstacles(120, 160, 120, 160, 'river');
-map = createObstacles(660, 820, 180, 200, 'river');
-map = createObstacles(900, 1180, 180, 200, 'river');
-map = createOneObstacle(300, 340, 'mountain');
-map = createObstacles(280, 320, 360, 380, 'mountain');
-map = createObstacles(740, 760, 420, 500, 'forest');
-map = createObstacles(960, 1000, 440, 460, 'forest');
-map = createObstacles(980, 1000, 440, 520, 'forest');
-addNeighbours(map);
+map = createObstacles(120, 160, 120, 160, 'river', map);
+map = createObstacles(660, 820, 180, 200, 'river', map);
+map = createObstacles(900, 1180, 180, 200, 'river', map);
+map = createOneObstacle(300, 340, 'mountain', map);
+map = createObstacles(280, 320, 360, 380, 'mountain', map);
+map = createObstacles(740, 760, 420, 500, 'forest', map);
+map = createObstacles(960, 1000, 440, 460, 'forest', map);
+map = createObstacles(980, 1000, 440, 520, 'forest', map);
+map = addNeighbours(map);
