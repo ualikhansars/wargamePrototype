@@ -27,16 +27,11 @@ export const aStar = (startNode:any, finishNode:any, map:any[]) => {
   let from = new Map();
 
   // For each node, the cost of getting from the start node to that node.
-  // let gScore = new Map();
-  // let fScore = new Map();
-  //
-  // gScore.set(startNode, 0);
-  // fScore.set(startNode, gScore.get(startNode) + h(startNode, finishNode));
   while(open) {
     let current:any = getMinFScore(open);
-    //console.log('current', current);
+    // console.log('current', current);
+    // console.log('finishNode:', finishNode);
     if(current.x === finishNode.x && current.y === finishNode.y) {
-      //console.error('Path', reconstructPath(from, current));
       return reconstructPath(from, current);
     }
     open = deleteObjectFromArray(current, open);

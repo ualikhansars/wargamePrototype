@@ -60,6 +60,13 @@ canvas.addEventListener('click', (e) => {
   onChooseWarrior(warriors, x, y);
   onChooseUnit(units, currentlyChosenWarrior);
   console.log('currentlyChosenWarrior', currentlyChosenWarrior);
+  for(let grid of map) {
+    let bottomRightX = grid.x + gridSize;
+    let bottomRightY = grid.y + gridSize;
+    if(x >= grid.x && x < bottomRightX && y >= grid.y && y < bottomRightY) {
+      console.log('node', grid, ' was chosen');
+    }
+  }
 });
 
 // set onClickListener for right mouse event

@@ -1,5 +1,8 @@
 export const getMinFScore = (open:any[]) => {
   let min = 0;
+  if(open.length === 1) {
+    return open[min];
+  }
   for(let i = 1; i < open.length - 1; ++i) {
     if(open[min].fScore > open[i].fScore) {
       min = i;

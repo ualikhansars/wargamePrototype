@@ -18,34 +18,33 @@ import {deleteObjectFromArray,isObjectInArray} from '../utils/objUtils';
 export let updateWarrior = (warrior:any, path:any[], i:number=0, currentMoveToX:number, currentMoveToY:number) => {
   //console.log('updateWarrior');
   warrior.setIsMovingToTrue();
-  if(currentMoveToX !== warrior.moveToNode.x || currentMoveToY !== warrior.moveToNode.y) {
-    console.log('new destination has been chosen');
-    warrior.moveToNode.x = warrior.x;
-    warrior.moveToNode.y = warrior.y;
-    warrior.setIsMovingToFalse();
-    console.error('new destination; node{x: 960, y: 480} in map:', isObjectInArray({x: 960, y: 480}, map));
-    return;
-  }
-
   let updatedPath = Object.assign([], path);
   let node = updatedPath[i]; // get next node
 
+  if(currentMoveToX !== warrior.moveToNode.x || currentMoveToY !== warrior.moveToNode.y) {
+    console.log('new destination has been chosen');
+    warrior.moveToNode.x = node.x;
+    warrior.moveToNode.y = node.y;
+    warrior.setIsMovingToFalse();
+    return;
+  }
   // ally warrior is on the destination position
   // currentWarrior should stop moving
   if(checkOtherWarriorsPosition(warriors, warrior, node.x, node.y) && i === updatedPath.length - 1) {
     warrior.moveToNode.x = node.x; // set moveToNode value to current warrior position
     warrior.moveToNode.y = node.y;
     warrior.setIsMovingToFalse();
-    console.error('ally unit in dest position; node{x: 960, y: 480} in map:', isObjectInArray({x: 960, y: 480}, map));
+    console.error('ally unit in dest position');
     return;
   }
   if(checkOtherWarriorsPosition(warriors, warrior, node.x, node.y)) {
 
     if(isAllyUnitIsOnPosition(warriors, warrior, node.x, node.y)) {
+      // warrior in the same unit blocks the next position and it finished movement
       console.log(`ally's warrior is on position`);
       warrior.setIsMovingToFalse();
-      warrior.setX(warrior.x);
-      warrior.setY(warrior.y);
+      warrior.moveToNode.x = node.x; // set moveToNode value to current warrior position
+      warrior.moveToNode.y = node.y;
       return;
     }
     // unit has another allies' unit on its way
@@ -78,7 +77,8 @@ export let updateWarrior = (warrior:any, path:any[], i:number=0, currentMoveToX:
     setTimeout(() => {
       updateWarrior(warrior, updatedPath, i, currentMoveToX, currentMoveToY);
     }, 400);
-  } else {
+  }
+  else {
     warrior.moveToNode.x = warrior.x; // set moveToNode value to current warrior position
     warrior.moveToNode.y = warrior.y;
     warrior.setIsMovingToFalse();

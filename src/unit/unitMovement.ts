@@ -28,7 +28,7 @@ export const moveToPosition = (unit:any, nextNode:any) => {
     let y:number = nextNode.y + (differenceInY * gridSize);
     console.error('x:', x, 'y:', y);
     let moveToNode;
-    if(isObjectInArray({x, y}, map)) { // if node is  exist then go to this node
+    if(isObjectInArray({x, y}, map)) { // if node exists then go to this node
       moveToNode = getNodeFromMap(x, y, map);
     } else { // else go to guaranted existed node (nextNode)
       moveToNode = nextNode;
@@ -38,7 +38,6 @@ export const moveToPosition = (unit:any, nextNode:any) => {
     warrior.moveToNode = moveToNode;
   }
   unitMovement(movingWarriors, nextNode);
-  console.error('node{x: 960, y: 480} in map:', isObjectInArray({x: 960, y: 480}, map));
 }
 
 export const checkWarriorsPositions = (centralWarrior:any, currentWarrior:any) => {
@@ -63,9 +62,9 @@ export const unitMovement = (movingWarriors:any[], nextNode:any) => {
   console.error('unitMovement closest:', closest);
   let startNode = getNodeFromMap(closest.x, closest.y, map); // startNode of the closest warrior
   console.log('x:', closest.x, 'y:', closest.y);
-  console.log('is node in map:', isObjectInArray({x: closest.x, y: closest.y}, map));
-  console.log('map:', map);
   console.error('unitMovement startNode:', startNode);
+  console.error('finishNode', closest.moveToNode);
+  console.log('map', map);
   let path:any = aStar(startNode, closest.moveToNode, map);
   updateWarrior(closest, path, 0, closest.moveToNode.x, closest.moveToNode.y);
   movingWarriors = deleteObjectFromArray(closest, movingWarriors);
